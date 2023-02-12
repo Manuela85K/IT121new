@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making the Grade </title>
+</head>
+<style>
+    body{font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
+    .list_item{
+        background-color: whitesmoke;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px; border-radius: 10px;
+        text-transform: capitalize;
+    }
+    .row{display: flex;}
+    .col{flex:1;}
+</style>
+<body>
+    <h3>Students List</h3>
+    <div class="row">
+        <div class="col">
+            <ul id="studentList"></ul>
+        </div>
+        <div class="col">
+            <p>Total Students: <span id="total"></span></p>
+            <p>Min Score: <span id="min"></span></p>
+            <p>Max Score: <span id="max"></span></p>
+            <p>Avergae Score: <span id="avg"></span></p>
+        </div>
+
+    </div>
+</body>
+<script>
+    var grades="jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+    var students=grades.split(', ');
+    var names=[];
+    var scores=[];
+    var totalScore=0;
+    var html='';
+    students.forEach(student => {
+        studentData=student.split('|');
+        names.push(studentData[0]);
+        scores.push(parseInt(studentData[1]));
+        totalScore+=parseInt(studentData[1]);
+        html+=`<li class="list_item">${studentData[0]} - ${studentData[1]} </li>`;
+    });
+    document.getElementById('studentList').innerHTML=html;
+
+   const maxScore = Math.max(...scores);
+   const minScore = Math.min(...scores);
+   const avgScore =totalScore/scores.length;
+
+   document.getElementById('total').innerHTML=students.length;
+   document.getElementById('min').innerHTML=minScore;
+   document.getElementById('max').innerHTML=maxScore;
+   document.getElementById('avg').innerHTML=avgScore;
+
+</script>
+</html>
