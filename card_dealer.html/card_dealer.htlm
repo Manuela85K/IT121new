@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  </head>
+  <style>
+    #hand{
+      width: 300px;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid lightgray;
+    }
+  </style>
+  <body>
+    <h1>Robo Dealer</h1>
+    <button onclick="dealHand();">Deal Hand</button> <br>
+    <!-- <button id="draw-button">Draw Cards</button> -->
+    <div id="hand"></div>
+  </body>
+</html>
+<script>
+  // Card object with 'value' and 'suit' properties
+class Card {
+  constructor(value, suit) {
+    this.value = value;
+    this.suit = suit;
+  }
+}
+
+// Array of 52 unique cards in a deck
+const deck = [];
+const suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
+const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
+
+for (let suit of suits) {
+  for (let value of values) {
+    deck.push(new Card(value, suit));
+  }
+}
+
+// Function to randomly select 5 cards from deck
+const drawCards = () => {
+  const hand = [];
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * 52);
+    hand.push(deck[randomIndex]);
+  }
+  return hand;
+};
+
+// Display selected cards on HTML page
+const dealHand = () => {
+  const hand = drawCards();
+  const handDisplay = document.getElementById('hand');
+  handDisplay.innerHTML = '';
+  for (let card of hand) {
+    handDisplay.innerHTML += `${card.value} of ${card.suit}<br>`;
+  }
+};
+
+
+</script>
