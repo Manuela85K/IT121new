@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+<style>
+  .error{
+    color: brown;
+  }
+  .success{
+    color: green;
+  }
+</style>
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><br>
+  last name: <input type="text" name="lastname"><br>
+  password: <input type="text" name="password"><br>
+
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+
+<script>
+
+// add validatePassword function here
+function validatePassword(password) {
+  if(password.length<=8){
+    $("#message").html("<p class='error'>Password must be at least 8 charcters</p>");
+    return false;
+  }
+  else if(/[A-Z]/.test(password)==false){
+    $("#message").html("<p class='error'>Password must conatin at least one uppercase letter</p>");
+    return false;
+  }
+  else if(/[a-z]/.test(password)==false){
+    $("#message").html("<p class='error'>Password must conatin at least one lowercase letter</p>");
+    return false;
+  }
+  else{
+    $("#message").html("<p class='success'>Form Submit successfully!</p>");
+    return true;
+  }
+}
+function containsUppercase(str) {
+  return /[A-Z]/.test(str);
+}
+
+const validateForm = (myForm) => {
+
+
+  var firstname = myForm.firstname.value; // get text of firstname field
+  var lastname = myForm.lastname.value; 
+  var password = myForm.password.value; 
+
+
+  validatePassword(password);
+  if(firstname==''){
+    $("#message").html("<p class='error'>First name is required</p>");
+  }
+  else if(lastname==''){
+    $("#message").html("<p class='error'>Last name is required</p>");
+  }
+  
+  // update 'message' DIV with appropriate wording
+  // $("#message").html("Button clicked");
+
+  /* Form validation code goes here
+  */
+ 
+
+  return false; // prevent page reload
+}
+
+</script>
+
+</body>
+</html>
