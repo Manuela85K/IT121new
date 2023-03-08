@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Weather Forecast</title>
+  </head>
+  <body>
+    <form>
+      <label for="city">Enter a US city:</label>
+      <input type="text" id="city"  name="city" required />
+      <button type="submit">Get Forecast</button>
+    </form>
+   
+    <div id="title"></div>
+    <table width="100%">
+      <tr id="forecast" >
+      </tr>
+    </table>
+
+    <script>
+      const apiKey = 'b536de298dff6e742a9e077158be642e';
+
+      function getForecast(city) {
+        
+          if (containsNumeric(city)) {
+            alert("City name cannot contain numeric characters");
+          } else {
+            // make API request with cityName, stateCode, countryCode
+          const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},US&appid=${apiKey}`;
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.cod !== '200') {
+                throw new Error(data.message);
+              }
+
+              const forecastData = data.list.filter(
+                (item) => item.dt_txt.includes('12:00:00')
+              );
+
+              if (forecastData.length === 0) {
+                throw new Error('No forecast data found. Try different or later');
+              }
+              document.getElementById('title').innerHTML=`<h2>${city} 5 day Forecast</h2> <hr>`;
+
+              const forecastHTML = forecastData
+                .map((item) => {
+                  const date = new Date(item.dt_txt);
+                  const icon = `http://openweathermap.org/img/w/${item.weather[0].icon}.png`;
+                  return `
+                    <td>
+                      <h2>${date.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                      })}</h2>
+                      <img src="${icon}" alt="${item.weather[0].description}" />
+                      <p>${item.weather[0].description}</p>
+                      <p>Min Temp: ${converTemp(item.main.temp_min)}&deg;F</p>
+                      <p>Max Temp: ${converTemp(item.main.temp_max)}&deg;F</p>
+                      <p>Humidity: ${item.main.humidity}%</p>
+                    </td>
+                  `;
+                })
+                .join('');
+
+              document.getElementById('forecast').innerHTML = forecastHTML;
+            })
+            .catch((error) => {
+              document.getElementById('forecast').innerHTML = `<p>${error.message}</p>`;
+            });
+        }
+      }
+
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const city = document.getElementById('city').value;
+        getForecast(city);
+      });
+      function containsNumeric(str) {
+        return /\d/.test(str);
+      }
+      function converTemp(kTemp) {
+       
+        let fTemp=(((Number(kTemp) - 273.15)*9)/5) + 32;
+        return fTemp.toFixed(2);
+        
+      }
+    </script>
+  </body>
+</html>

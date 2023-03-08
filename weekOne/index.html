@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 - Assignment</title>
+</head>
+<style>
+    body{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .block{
+        background-color: lightgray;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+</style>
+<body>
+    <h4>Week 1 -  Assignment</h4>
+    <div class="block">
+        <p id="content"> </p>
+    </div>
+</body>
+<script src="script.js"></script>
+<script>
+    var content='My name is '+firstName+' '+lastName+'. I have been at SCC for '+yearsOfStudy+' and plan to '+goal+' after completing my courses.';
+    document.getElementById('content').innerText=content;
+</script>
+</html>
