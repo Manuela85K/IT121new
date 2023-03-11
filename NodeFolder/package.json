@@ -1,0 +1,19 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "node js practice",
+  "main": "file.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manuela85K/IT121new.git"
+  },
+  "author": "Manuela Kay-Arden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Manuela85K/IT121new/issues"
+  },
+  "homepage": "https://github.com/Manuela85K/IT121new#readme"
+}
