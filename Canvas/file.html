@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animated Shapes</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1000" height="400"></canvas>
+
+    <script>
+      let canvas = document.getElementById("myCanvas");
+      let ctx = canvas.getContext("2d");
+
+      let circle1 = {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        vx: 5,
+        vy: 2,
+        radius: 50,
+        color: "red",
+      };
+      let circle2 = {
+        x: canvas.width / 3,
+        y: canvas.height / 3,
+        vx: 3,
+        vy: 4,
+        radius: 30,
+        color: "blue",
+      };
+
+      function animate() {
+        ctx.save();
+
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the line
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.strokeStyle = "#2196f3";
+        ctx.stroke();
+
+        // Draw the rectangle
+        ctx.fillStyle = "#4caf50";
+        ctx.fillRect(
+          canvas.width / 4,
+          canvas.height / 4,
+          canvas.width / 2,
+          canvas.height / 2
+        );
+
+        // Draw the circles
+        ctx.beginPath();
+        ctx.arc(circle1.x, circle1.y, circle1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = circle1.color;
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(circle2.x, circle2.y, circle2.radius, 0, Math.PI * 2);
+        ctx.fillStyle = circle2.color;
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.restore();
+
+        // Update the position of the circles based on their velocities
+        circle1.x += circle1.vx;
+        circle1.y += circle1.vy;
+        circle2.x += circle2.vx;
+        circle2.y += circle2.vy;
+
+        // Check if the circles have collided
+        let distance = Math.sqrt(
+          (circle1.x - circle2.x) ** 2 + (circle1.y - circle2.y) ** 2
+        );
+        if (distance <= circle1.radius + circle2.radius) {
+          // If they have collided, reverse their velocities
+          let tempVx = circle1.vx;
+          let tempVy = circle1.vy;
+          circle1.vx = circle2.vx;
+          circle1.vy = circle2.vy;
+          circle2.vx = tempVx;
+          circle2.vy = tempVy;
+        }
+
+        // circles bounce off the edges of the canvas
+        if (
+          circle1.x + circle1.radius > canvas.width ||
+          circle1.x - circle1.radius < 0
+        ) {
+          circle1.vx = -circle1.vx;
+        }
+        if (
+          circle1.y + circle1.radius > canvas.height ||
+          circle1.y - circle1.radius < 0
+        ) {
+          circle1.vy = -circle1.vy;
+        }
+        if (
+          circle2.x + circle2.radius > canvas.width ||
+          circle2.x - circle2.radius < 0
+        ) {
+          circle2.vx = -circle2.vx;
+        }
+        if (
+          circle2.y + circle2.radius > canvas.height ||
+          circle2.y - circle2.radius < 0
+        ) {
+          circle2.vy = -circle2.vy;
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
